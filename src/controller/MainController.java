@@ -39,9 +39,18 @@ public class MainController implements ActionListener{
             case "GoBackToPlayerView":
                 goBackPlayerView();
                 break;
+            case "AddNewPlayer":
+                addNewPlayer();
+                break;
             default:
                 mainView.showError("Invalid action performed");
         }
+    }
+
+    private void addNewPlayer() {
+        Player newPlayer = new Player(createNewPlayerView.getNameTextField().getText());
+        newPlayer.addNewPlayerBDD();
+        goBackPlayerView();
     }
 
     private void goBackPlayerView() {

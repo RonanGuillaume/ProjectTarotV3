@@ -64,5 +64,11 @@ public class CreateNewPlayerView extends AbstractView{
     public void registerListener(ActionListener actionListener) {
         cancelButton.setActionCommand("GoBackToPlayerView");
         cancelButton.addActionListener(actionListener);
+        addButton.setActionCommand("AddNewPlayer");
+        addButton.addActionListener(actionListener);
+    }
+
+    public JTextField getNameTextField() {
+        return nameTextField;
     }
 }
