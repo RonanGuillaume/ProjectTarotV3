@@ -53,6 +53,20 @@ public class PlayersView extends AbstractView{
         playerTable.updateUI();
 
         setVisible(true);
+
+        playerTable.getSelectionModel().addListSelectionListener(e -> {
+            if (playerTable.getSelectedRowCount()!=0){
+                deleteButton.setEnabled(true);
+                modifyButton.setEnabled(false);
+            }
+            if (playerTable.getSelectedRowCount()== 1){
+                modifyButton.setEnabled(true);
+            }
+            if (playerTable.getSelectedRowCount()== 0){
+                deleteButton.setEnabled(false);
+                modifyButton.setEnabled(false);
+            }
+        });
     }
 
     @Override
