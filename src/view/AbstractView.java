@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.util.EventListener;
 
 /**
  * Created by Ronan
@@ -33,5 +33,5 @@ public abstract class AbstractView extends JFrame {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    abstract public void registerListener(ActionListener actionListener);
+    abstract public void registerListener(EventListener actionListener);
 }

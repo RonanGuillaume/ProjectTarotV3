@@ -13,11 +13,14 @@ import java.awt.event.ActionListener;
  * on 10/03/2017.
  */
 public class MainController implements ActionListener{
+    private ManagerController managerController;
+    private GameController gameManager;
     private MainView mainView;
     private PlayersView playersView;
     private CreateNewPlayerView createNewPlayerView;
 
     public MainController() {
+        managerController = new ManagerController();
         mainView = new MainView(this);
     }
 
@@ -47,30 +50,9 @@ public class MainController implements ActionListener{
         }
     }
 
-    private void addNewPlayer() {
-        Player newPlayer = new Player(createNewPlayerView.getNameTextField().getText());
-        newPlayer.addNewPlayerBDD();
-        goBackPlayerView();
-    }
-
-    private void goBackPlayerView() {
-        createNewPlayerView.dispose();
-        playersView = new PlayersView(this, Player.getAllPlayers());
-    }
-
-    private void showCreatePlayerView() {
-        playersView.setVisible(false);
-        createNewPlayerView = new CreateNewPlayerView(this);
-    }
-
     private void showMainView() {
         playersView.dispose();
         mainView.setVisible(true);
-    }
-
-    private void managePlayers() {
-        mainView.setVisible(false);
-        playersView = new PlayersView(this, Player.getAllPlayers());
     }
 
     private void starGame() {

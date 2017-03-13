@@ -1,5 +1,6 @@
 package view;
 
+import controller.ManagerListener;
 import model.Player;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.EventListener;
 
 /**
  * Created by Ronan
@@ -20,7 +22,7 @@ public class CreateNewPlayerView extends AbstractView{
     private JButton addButton;
     private JLabel errorLabel;
 
-    public CreateNewPlayerView(ActionListener actionListener) throws HeadlessException {
+    public CreateNewPlayerView(ManagerListener actionListener) throws HeadlessException {
         super("Create a new player");
 
         //Set margin
@@ -61,7 +63,7 @@ public class CreateNewPlayerView extends AbstractView{
     }
 
     @Override
-    public void registerListener(ActionListener actionListener) {
+    public void registerListener(EventListener actionListener) {
         cancelButton.setActionCommand("GoBackToPlayerView");
         cancelButton.addActionListener(actionListener);
         addButton.setActionCommand("AddNewPlayer");

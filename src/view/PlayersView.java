@@ -1,11 +1,12 @@
 package view;
 
+import controller.ManagerListener;
 import model.Player;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.util.EventListener;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class PlayersView extends AbstractView{
 
     private PlayerTableModel playerTableModel;
 
-    public PlayersView(ActionListener actionListener, List<Player> players) throws HeadlessException {
+    public PlayersView(ManagerListener actionListener, List<Player> players) throws HeadlessException {
         super("Players");
 
         //Set margin
@@ -48,7 +49,7 @@ public class PlayersView extends AbstractView{
     }
 
     @Override
-    public void registerListener(ActionListener actionListener) {
+    public void registerListener(EventListener actionListener) {
         cancelButton.setActionCommand("GoBackMainView");
         cancelButton.addActionListener(actionListener);
         createButton.setActionCommand("CreatePlayer");
