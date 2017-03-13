@@ -67,6 +67,9 @@ public class PlayersView extends AbstractView{
                 modifyButton.setEnabled(false);
             }
         });
+
+
+        deleteButton.addActionListener(e -> firePlayerDeleted());
     }
 
     @Override
@@ -76,7 +79,14 @@ public class PlayersView extends AbstractView{
     }
 
     private void firePlayerDeleted(){
-        managerListener.playerDeleted(new PlayerEvent(playerTableModel.getElementAt(playerTable.getSelectedRow()), null));
+        int[] selectedRows = playerTable.getSelectedRows();
+
+        for (int index : selectedRows) {
+            managerListener.playerDeleted(new PlayerEvent(playerTableModel.getElementAt(index), null));
+        }
+        playerTableModel.setPlayers((ArrayList<Player>) Player.getAllPlayers());
+        playerTable.clearSelection();
+        playerTable.updateUI();
     }
 
     @Override
@@ -84,6 +94,7 @@ public class PlayersView extends AbstractView{
         super.setVisible(b);
         if (b){
             playerTableModel.setPlayers((ArrayList<Player>) Player.getAllPlayers());
+            playerTable.clearSelection();
             playerTable.updateUI();
         }
     }

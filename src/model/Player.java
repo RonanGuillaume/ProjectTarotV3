@@ -50,7 +50,15 @@ public class Player implements Participant, Serializable{
 
     public void updatePlayerBDD(){
         ArrayList<Player> players = (ArrayList<Player>) getAllPlayers();
-        if (players.remove(this)){
+        boolean removed = false;
+        for (Player player : players) {
+            if (player.getName().equalsIgnoreCase(this.getName())){
+                players.remove(player);
+                removed = true;
+                break;
+            }
+        }
+        if (!removed){
             throw new IllegalArgumentException("This player doesn't exists in the BDD");
         }
         players.add(this);
@@ -59,7 +67,15 @@ public class Player implements Participant, Serializable{
 
     public void removePlayerBDD(){
         ArrayList<Player> players = (ArrayList<Player>) getAllPlayers();
-        if (players.remove(this)){
+        boolean removed = false;
+        for (Player player : players) {
+            if (player.getName().equalsIgnoreCase(this.getName())){
+                players.remove(player);
+                removed = true;
+                break;
+            }
+        }
+        if (!removed){
             throw new IllegalArgumentException("This player doesn't exists in the BDD");
         }
         FileManager.writeToFile("config/players.bar", players);

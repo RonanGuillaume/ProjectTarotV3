@@ -6,10 +6,7 @@ import model.Player;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -46,30 +43,21 @@ public class CreateNewPlayerView extends AbstractView{
         setVisible(true);
 
 
-        nameTextField.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                errorLabel.setVisible(false);
-                if(nameTextField.getText().length()==0){
-                    addButton.setEnabled(false);
-                }
-                else if (Player.nameExistsInTheBDD(nameTextField.getText())){
-                    errorLabel.setVisible(true);
-                    addButton.setEnabled(false);
-                }
-                else {
-                    addButton.setEnabled(true);
-                }
+        nameTextField.addCaretListener(e -> {
+            errorLabel.setVisible(false);
+            if(nameTextField.getText().length()==0){
+                addButton.setEnabled(false);
+            }
+            else if (Player.nameExistsInTheBDD(nameTextField.getText())){
+                errorLabel.setVisible(true);
+                addButton.setEnabled(false);
+            }
+            else {
+                addButton.setEnabled(true);
             }
         });
 
-
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                firePlayerCreated();
-            }
-        });
+        addButton.addActionListener(e -> firePlayerCreated());
     }
 
     @Override
@@ -81,7 +69,6 @@ public class CreateNewPlayerView extends AbstractView{
 
 
     private void firePlayerCreated(){
-        Player newPlayer = new Player(nameTextField.getText());
         managerController.playerCreated(new PlayerEvent(new Player(nameTextField.getText()), null));
     }
 }
