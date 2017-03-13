@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
  */
 public interface ManagerListener extends ActionListener {
     void playerCreated(PlayerEvent playerEvent);
-    void goBackPlayerView();
-    void showCreatePlayerView();
     void playerDeleted(PlayerEvent playerEvent);
     void playerNameModified(PlayerEvent playerEvent);
 }

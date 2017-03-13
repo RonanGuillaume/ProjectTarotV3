@@ -14,40 +14,62 @@ public class ManagerController implements ManagerListener{
     private PlayersView playersView;
     private CreateNewPlayerView createNewPlayerView;
 
-    public ManagerController() {
-        this.playersView = new PlayersView(this, Player.getAllPlayers());
+    public ManagerController(MainController mainController) {
+        this.playersView = new PlayersView(mainController, this, Player.getAllPlayers());
+    }
+
+    public void disposePlayerView(){
+        playersView.setVisible(false);
     }
 
     @Override
     public void playerCreated(PlayerEvent playerEvent) {
-        playerEvent.getPlayer().addNewPlayerBDD();
+        Player player = (Player)(playerEvent.getSource());
+        player.addNewPlayerBDD();
         goBackPlayerView();
     }
 
-    @Override
-    public void goBackPlayerView() {
+    private void goBackPlayerView() {
         createNewPlayerView.dispose();
-        playersView = new PlayersView(this, Player.getAllPlayers());
+        playersView.setVisible(true);
     }
 
-    @Override
-    public void showCreatePlayerView() {
+    private void showCreatePlayerView() {
         playersView.setVisible(false);
         createNewPlayerView = new CreateNewPlayerView(this);
     }
 
     @Override
     public void playerDeleted(PlayerEvent playerEvent) {
-        playerEvent.getPlayer().removePlayerBDD();
+        Player player = (Player)(playerEvent.getSource());
+        player.removePlayerBDD();
     }
 
     @Override
     public void playerNameModified(PlayerEvent playerEvent) {
+        Player player = (Player)(playerEvent.getSource());
 
+        int numberVictories = player.getNumberOfVictories();
+        int numberPlayed = player.getNumberPortionsPlayed();
+
+        player.removePlayerBDD();
+
+        Player modifiedPlayer = new Player(playerEvent.getPlayer().getName(), numberVictories, numberPlayed);
+
+        modifiedPlayer.addNewPlayerBDD();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        switch (e.getActionCommand()){
+            case "CreatePlayer":
+                showCreatePlayerView();
+                break;
+            case "GoBackToPlayerView":
+                goBackPlayerView();
+                break;
+            default:
+                playersView.showError("Invalid action performed");
+        }
     }
 }

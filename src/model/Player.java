@@ -21,6 +21,12 @@ public class Player implements Participant, Serializable{
         this.numberPortionsPlayed = 0;
     }
 
+    public Player(String name, int numberOfVictories, int numberPortionsPlayed) {
+        this.name = name;
+        this.numberOfVictories = numberOfVictories;
+        this.numberPortionsPlayed = numberPortionsPlayed;
+    }
+
     public int getNumberOfVictories() {
         return numberOfVictories;
     }

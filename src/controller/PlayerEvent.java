@@ -10,19 +10,13 @@ import java.util.EventObject;
  */
 public class PlayerEvent extends EventObject{
     private Player player;
-    private String newName;
 
-    public PlayerEvent(Object source, Player player, String newName) {
+    public PlayerEvent(Object source, Player player) {
         super(source);
         this.player = player;
-        this.newName = newName;
     }
 
     public Player getPlayer() {
         return player;
-    }
-
-    public String getNewName() {
-        return newName;
     }
 }

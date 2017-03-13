@@ -1,9 +1,6 @@
 package controller;
 
-import model.Player;
-import view.CreateNewPlayerView;
 import view.MainView;
-import view.PlayersView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,11 +13,8 @@ public class MainController implements ActionListener{
     private ManagerController managerController;
     private GameController gameManager;
     private MainView mainView;
-    private PlayersView playersView;
-    private CreateNewPlayerView createNewPlayerView;
 
     public MainController() {
-        managerController = new ManagerController();
         mainView = new MainView(this);
     }
 
@@ -31,27 +25,23 @@ public class MainController implements ActionListener{
                 starGame();
                 break;
             case "ManagePlayers":
-                managePlayers();
+                managePlayer();
                 break;
             case "GoBackMainView":
                 showMainView();
-                break;
-            case "CreatePlayer":
-                showCreatePlayerView();
-                break;
-            case "GoBackToPlayerView":
-                goBackPlayerView();
-                break;
-            case "AddNewPlayer":
-                addNewPlayer();
                 break;
             default:
                 mainView.showError("Invalid action performed");
         }
     }
 
+    private void managePlayer() {
+        managerController = new ManagerController(this);
+        mainView.setVisible(false);
+    }
+
     private void showMainView() {
-        playersView.dispose();
+        managerController.disposePlayerView();
         mainView.setVisible(true);
     }
 

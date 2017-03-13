@@ -1,6 +1,7 @@
 package view;
 
-import controller.ManagerListener;
+import controller.ManagerController;
+import controller.PlayerEvent;
 import model.Player;
 
 import javax.swing.*;
@@ -8,8 +9,8 @@ import javax.swing.border.Border;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventListener;
 
 /**
  * Created by Ronan
@@ -21,18 +22,19 @@ public class CreateNewPlayerView extends AbstractView{
     private JButton cancelButton;
     private JButton addButton;
     private JLabel errorLabel;
+    private ManagerController managerController;
 
-    public CreateNewPlayerView(ManagerListener actionListener) throws HeadlessException {
+    public CreateNewPlayerView(ManagerController managerController) throws HeadlessException {
         super("Create a new player");
+
+        this.managerController = managerController;
 
         //Set margin
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         mainPanel.setBorder(padding);
         setContentPane(mainPanel);
 
-        if(actionListener != null){
-            registerListener(actionListener);
-        }
+        registerListener(managerController);
 
         improvePlacement();
 
@@ -60,17 +62,26 @@ public class CreateNewPlayerView extends AbstractView{
                 }
             }
         });
+
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                firePlayerCreated();
+            }
+        });
     }
 
     @Override
-    public void registerListener(EventListener actionListener) {
+    public void registerListener(ActionListener actionListener) {
         cancelButton.setActionCommand("GoBackToPlayerView");
         cancelButton.addActionListener(actionListener);
-        addButton.setActionCommand("AddNewPlayer");
-        addButton.addActionListener(actionListener);
     }
 
-    public JTextField getNameTextField() {
-        return nameTextField;
+
+
+    private void firePlayerCreated(){
+        Player newPlayer = new Player(nameTextField.getText());
+        managerController.playerCreated(new PlayerEvent(new Player(nameTextField.getText()), null));
     }
 }

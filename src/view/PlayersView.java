@@ -1,12 +1,14 @@
 package view;
 
 import controller.ManagerListener;
+import controller.PlayerEvent;
 import model.Player;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.EventListener;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,11 +23,16 @@ public class PlayersView extends AbstractView{
     private JButton cancelButton;
     private JTextField textField1;
     private JButton createButton;
+    private ManagerListener managerListener;
 
     private PlayerTableModel playerTableModel;
 
-    public PlayersView(ManagerListener actionListener, List<Player> players) throws HeadlessException {
+    public PlayersView(ActionListener actionListener, ManagerListener managerListener, List<Player> players) throws HeadlessException {
         super("Players");
+
+        this.managerListener = managerListener;
+        createButton.setActionCommand("CreatePlayer");
+        createButton.addActionListener(managerListener);
 
         //Set margin
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
@@ -49,10 +56,21 @@ public class PlayersView extends AbstractView{
     }
 
     @Override
-    public void registerListener(EventListener actionListener) {
+    public void registerListener(ActionListener actionListener) {
         cancelButton.setActionCommand("GoBackMainView");
         cancelButton.addActionListener(actionListener);
-        createButton.setActionCommand("CreatePlayer");
-        createButton.addActionListener(actionListener);
+    }
+
+    private void firePlayerDeleted(){
+        managerListener.playerDeleted(new PlayerEvent(playerTableModel.getElementAt(playerTable.getSelectedRow()), null));
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        if (b){
+            playerTableModel.setPlayers((ArrayList<Player>) Player.getAllPlayers());
+            playerTable.updateUI();
+        }
     }
 }
