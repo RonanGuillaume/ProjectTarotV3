@@ -52,8 +52,8 @@ public abstract class FileManager {
             FileInputStream fileInputStream=new FileInputStream(filename);
             inputStream = new ObjectInputStream(fileInputStream);
             objectRead = inputStream.readObject();
-        } catch (EOFException eofException) {
-            System.out.println("End of file");
+        } catch (EOFException ignored) {
+
         } catch (ClassNotFoundException classNotFoundException) {
             System.err.println("Object creation failed.");
         } catch (IOException ioException) {

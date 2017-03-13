@@ -1,5 +1,6 @@
 package controller;
 
+import model.Player;
 import view.MainView;
 import view.PlayersView;
 
@@ -41,7 +42,7 @@ public class MainController implements ActionListener{
 
     private void managePlayers() {
         mainView.setVisible(false);
-        playersView = new PlayersView(this, null);
+        playersView = new PlayersView(this, Player.getAllPlayers());
     }
 
     private void starGame() {
