@@ -33,14 +33,45 @@ public class Player implements Participant, Serializable{
         return (ArrayList<Player>) FileManager.readFromFile("config/players.bar");
     }
 
-    public void savePlayer(){
+    public void addNewPlayerBDD(){
         ArrayList<Player> players = (ArrayList<Player>) getAllPlayers();
         if(players==null){
             players = new ArrayList<>();
         }
-        players.remove(this);
         players.add(this);
         FileManager.writeToFile("config/players.bar", players);
+    }
+
+    public void updatePlayerBDD(){
+        ArrayList<Player> players = (ArrayList<Player>) getAllPlayers();
+        if (players.remove(this)){
+            throw new IllegalArgumentException("This player doesn't exists in the BDD");
+        }
+        players.add(this);
+        FileManager.writeToFile("config/players.bar", players);
+    }
+
+    public void removePlayerBDD(){
+        ArrayList<Player> players = (ArrayList<Player>) getAllPlayers();
+        if (players.remove(this)){
+            throw new IllegalArgumentException("This player doesn't exists in the BDD");
+        }
+        FileManager.writeToFile("config/players.bar", players);
+    }
+
+    static public boolean nameExistsInTheBDD(String playerName){
+        boolean result = false;
+
+        ArrayList<Player> players = (ArrayList<Player>) getAllPlayers();
+        if(players==null){
+            players = new ArrayList<>();
+        }
+        for (Player playerSaved : players) {
+            if (playerSaved.getName().equalsIgnoreCase(playerName)){
+                result = true;
+            }
+        }
+        return result;
     }
 
     @Override

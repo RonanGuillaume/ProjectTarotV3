@@ -35,6 +35,9 @@ public class PlayersView extends AbstractView{
             registerListener(actionListener);
         }
 
+        modifyButton.setEnabled(false);
+        deleteButton.setEnabled(false);
+
         improvePlacement();
 
         playerTableModel = new PlayerTableModel(players);
@@ -48,5 +51,7 @@ public class PlayersView extends AbstractView{
     public void registerListener(ActionListener actionListener) {
         cancelButton.setActionCommand("GoBackMainView");
         cancelButton.addActionListener(actionListener);
+        createButton.setActionCommand("CreatePlayer");
+        createButton.addActionListener(actionListener);
     }
 }
