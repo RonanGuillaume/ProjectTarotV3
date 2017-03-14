@@ -1,12 +1,15 @@
 package model;
 
+import controller.FileManager;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Ronan
  * on 13/02/2017.
  */
-public abstract class CardGame {
+public abstract class CardGame implements Serializable{
     private boolean isEnded;
     private Participant winner;
     private Calendar startDate;
@@ -92,6 +95,19 @@ public abstract class CardGame {
         calculateRanking();
     }
 
+    static public ArrayList<CardGame> getAllCardGames(){
+        return (ArrayList<CardGame>) FileManager.readFromFile("config/games.bar");
+    }
+
+    public void addGameToBDD(){
+        ArrayList<CardGame> cardGames = (ArrayList<CardGame>) getAllCardGames();
+        if(cardGames==null){
+            cardGames = new ArrayList<>();
+        }
+        cardGames.add(this);
+        FileManager.writeToFile("config/games.bar", cardGames);
+    }
+
     public void setEnded(boolean ended) {
         isEnded = ended;
     }
@@ -118,6 +134,11 @@ public abstract class CardGame {
 
     public void setTotals(HashMap<Participant, Integer> totals) {
         this.totals = totals;
+    }
+
+    @Override
+    public String toString() {
+        return getGameName();
     }
 
     abstract String getGameName();

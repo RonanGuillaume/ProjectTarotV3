@@ -21,7 +21,7 @@ public class PlayersView extends AbstractView{
     private JButton modifyButton;
     private JButton deleteButton;
     private JButton cancelButton;
-    private JTextField textField1;
+    private JTextField searchTextField;
     private JButton createButton;
     private ManagerListener managerListener;
 

@@ -1,6 +1,7 @@
 package model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.HashMap;
  * Created by Ronan
  * on 13/02/2017.
  */
-public class TarotGame extends CardGame{
+public class TarotGame extends CardGame implements Serializable{
 
     public TarotGame(int numberParticipants, ArrayList<Participant> participants) {
         super(numberParticipants, participants);

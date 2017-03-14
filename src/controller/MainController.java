@@ -1,5 +1,6 @@
 package controller;
 
+import view.ChoiceGameView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ public class MainController implements ActionListener{
     private ManagerController managerController;
     private GameController gameManager;
     private MainView mainView;
+    private ChoiceGameView choiceGameView;
 
     public MainController() {
         mainView = new MainView(this);
@@ -41,11 +43,17 @@ public class MainController implements ActionListener{
     }
 
     private void showMainView() {
-        managerController.disposePlayerView();
+        if (managerController != null){
+            managerController.disposePlayerView();
+        }
+        if (choiceGameView != null){
+            choiceGameView.setVisible(false);
+        }
         mainView.setVisible(true);
     }
 
     private void starGame() {
-
+        choiceGameView = new ChoiceGameView(this);
+        mainView.setVisible(false);
     }
 }
