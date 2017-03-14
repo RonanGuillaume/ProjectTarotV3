@@ -2,6 +2,7 @@ package controller;
 
 import model.Player;
 import view.CreateNewPlayerView;
+import view.ModifyPlayerView;
 import view.PlayersView;
 
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 public class ManagerController implements ManagerListener{
     private PlayersView playersView;
     private CreateNewPlayerView createNewPlayerView;
+    private ModifyPlayerView modifyPlayerView;
 
     public ManagerController(MainController mainController) {
         this.playersView = new PlayersView(mainController, this, Player.getAllPlayers());
@@ -30,7 +32,12 @@ public class ManagerController implements ManagerListener{
     }
 
     private void goBackPlayerView() {
-        createNewPlayerView.dispose();
+        if (createNewPlayerView!=null){
+            createNewPlayerView.dispose();
+        }
+        if (modifyPlayerView!=null){
+            modifyPlayerView.dispose();
+        }
         playersView.setVisible(true);
     }
 
@@ -57,6 +64,8 @@ public class ManagerController implements ManagerListener{
         Player modifiedPlayer = new Player(playerEvent.getPlayer().getName(), numberVictories, numberPlayed);
 
         modifiedPlayer.addNewPlayerBDD();
+
+        goBackPlayerView();
     }
 
     @Override
@@ -71,5 +80,10 @@ public class ManagerController implements ManagerListener{
             default:
                 playersView.showError("Invalid action performed");
         }
+    }
+
+    @Override
+    public void playerWantToBeModified(PlayerEvent playerEvent) {
+        modifyPlayerView = new ModifyPlayerView(this, (Player) playerEvent.getSource());
     }
 }

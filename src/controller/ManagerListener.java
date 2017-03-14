@@ -10,4 +10,5 @@ public interface ManagerListener extends ActionListener {
     void playerCreated(PlayerEvent playerEvent);
     void playerDeleted(PlayerEvent playerEvent);
     void playerNameModified(PlayerEvent playerEvent);
+    void playerWantToBeModified(PlayerEvent playerEvent);
 }

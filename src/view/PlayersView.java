@@ -50,6 +50,7 @@ public class PlayersView extends AbstractView{
 
         playerTableModel = new PlayerTableModel(players);
         playerTable.setModel(playerTableModel);
+        playerTable.setAutoCreateRowSorter(true);
         playerTable.updateUI();
 
         setVisible(true);
@@ -70,6 +71,8 @@ public class PlayersView extends AbstractView{
 
 
         deleteButton.addActionListener(e -> firePlayerDeleted());
+
+        modifyButton.addActionListener(e -> firePlayerNameChanged());
     }
 
     @Override
@@ -78,15 +81,27 @@ public class PlayersView extends AbstractView{
         cancelButton.addActionListener(actionListener);
     }
 
-    private void firePlayerDeleted(){
-        int[] selectedRows = playerTable.getSelectedRows();
+    private void firePlayerNameChanged() {
+        managerListener.playerWantToBeModified(new PlayerEvent(playerTableModel.getElementAt(playerTable.getSelectedRow()),
+                null));
+    }
 
-        for (int index : selectedRows) {
-            managerListener.playerDeleted(new PlayerEvent(playerTableModel.getElementAt(index), null));
+    private void firePlayerDeleted(){
+        Object[] options = { "OK", "Cancel" };
+        int choice = JOptionPane.showOptionDialog(this,"Are you sure to want" +
+                " to delete the player(s) selected ?", "Delete a player", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,null, options, options[0]);
+
+        if (choice == 0){
+            int[] selectedRows = playerTable.getSelectedRows();
+
+            for (int index : selectedRows) {
+                managerListener.playerDeleted(new PlayerEvent(playerTableModel.getElementAt(index), null));
+            }
+            playerTableModel.setPlayers((ArrayList<Player>) Player.getAllPlayers());
+            playerTable.clearSelection();
+            playerTable.updateUI();
         }
-        playerTableModel.setPlayers((ArrayList<Player>) Player.getAllPlayers());
-        playerTable.clearSelection();
-        playerTable.updateUI();
     }
 
     @Override

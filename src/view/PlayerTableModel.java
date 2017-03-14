@@ -15,6 +15,7 @@ public class PlayerTableModel extends AbstractTableModel {
     private String[] columnName = {"Name","Number of victories", "Number of game played"};
 
     public PlayerTableModel(List<Player> players) {
+        super();
         if (players==null){
             this.players = new ArrayList<>();
         }
@@ -36,6 +37,14 @@ public class PlayerTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         return columnName[column];
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if (columnName[columnIndex].equalsIgnoreCase("Name")){
+            return String.class;
+        }
+        return int.class;
     }
 
     @Override
