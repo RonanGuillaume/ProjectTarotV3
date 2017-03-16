@@ -15,6 +15,7 @@ public class CardGameComboBoxModel extends AbstractListModel<CardGame> implement
 
     public CardGameComboBoxModel() {
         cardGames = CardGame.getAllCardGames();
+        selectedItem = cardGames.get(0);
     }
 
     @Override

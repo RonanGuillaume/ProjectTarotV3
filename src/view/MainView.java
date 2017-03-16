@@ -35,6 +35,9 @@ public class MainView extends AbstractView{
             System.exit(0);
         });
 
+        //Default button
+        getRootPane().setDefaultButton(startAGameButton);
+
         setVisible(true);
     }
 

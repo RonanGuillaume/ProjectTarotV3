@@ -37,6 +37,9 @@ public class ChoiceGameView extends AbstractView{
 
         improvePlacement();
 
+        //Default button
+        getRootPane().setDefaultButton(validateButton);
+
         setVisible(true);
     }
 
